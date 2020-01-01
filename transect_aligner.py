@@ -31,7 +31,7 @@ from .resources import *
 # Import the code for the dialog
 from .transect_aligner_dialog import TransectAlignerDialog
 import os.path
-
+from .lib import align
 
 class TransectAligner:
     """QGIS Plugin Implementation."""

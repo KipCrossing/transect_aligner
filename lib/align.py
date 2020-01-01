@@ -3,9 +3,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 
-openem_df = pd.read_csv("input.csv")
+openem_df = pd.read_csv("~/.local/share/QGIS/QGIS3/profiles/default/python/plugins/transect_aligner/lib/input.csv")
 
-runs_df = pd.read_csv("runs1.csv")
+runs_df = pd.read_csv("~/.local/share/QGIS/QGIS3/profiles/default/python/plugins/transect_aligner/lib/runs1.csv")
 
 print(pd.concat([runs_df, runs_df], axis=0))
 
@@ -70,4 +70,4 @@ plt.plot(out_df['Longitude'], out_df['Latitude'])
 plt.show()
 plt.plot(out_df['ID'], out_df['Hp'])
 plt.show()
-out_df.to_csv('output.csv', index=False)
+out_df.to_csv('~/.local/share/QGIS/QGIS3/profiles/default/python/plugins/transect_aligner/lib/output.csv', index=False)
