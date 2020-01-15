@@ -178,11 +178,6 @@ class TransectAligner:
                 action)
             self.iface.removeToolBarIcon(action)
 
-    def select_output_file(self):
-        filename, _filter = QFileDialog.getSaveFileName(
-            self.dlg, "Select output file ", "", '*.csv')
-        self.dlg.lineEdit.setText(filename)
-
     def run(self):
         """Run method that performs all the real work"""
 
@@ -191,15 +186,9 @@ class TransectAligner:
         if self.first_start == True:
             self.first_start = False
             self.dlg = TransectAlignerDialog()
-            self.dlg.pushButton.clicked.connect(self.select_output_file)
+            # self.dlg.pushButton.clicked.connect(self.select_output_file)
 
         # My code - kip .
-        self.dlg.comboBox.clear()
-        layers = [layer for layer in QgsProject.instance().mapLayers().values()]
-        layer_list = []
-        for layer in layers:
-            layer_list.append(layer.name())
-        self.dlg.comboBox.addItems(layer_list)
 
         # show the dialog
         self.dlg.show()
@@ -207,15 +196,4 @@ class TransectAligner:
         result = self.dlg.exec_()
         # See if OK was pressed
         if result:
-            filename = self.dlg.lineEdit.text()
-            with open(filename, 'w') as output_file:
-                selectedLayerIndex = self.dlg.comboBox.currentIndex()
-                selectedLayer = layers[selectedLayerIndex]
-                fieldnames = [field.name() for field in selectedLayer.fields()]
-                # write header
-                line = ','.join(name for name in fieldnames) + '\n'
-                output_file.write(line)
-                # wirte feature attributes
-                for f in selectedLayer.getFeatures():
-                    line = ','.join(str(f[name]) for name in fieldnames) + '\n'
-                    output_file.write(line)
+            pass
