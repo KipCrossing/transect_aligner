@@ -1,25 +1,26 @@
 import sys
+import os
+os.system("pip install pandas")
 import pandas as pd
-import matplotlib.pyplot as plt
+# os.system("pip install matplotlib")
+# import matplotlib.pyplot as plt
 import numpy as np
 
 
 def run(input_location, runs_location, output_location):
-    # openem_df = pd.read_csv("~/.local/share/QGIS/QGIS3/profiles/default/python/plugins/transect_aligner/lib/input.csv")
     openem_df = pd.read_csv(input_location)
 
-    # runs_df = pd.read_csv("~/.local/share/QGIS/QGIS3/profiles/default/python/plugins/transect_aligner/lib/runs1.csv")
     runs_df = pd.read_csv(runs_location)
 
     print(pd.concat([runs_df, runs_df], axis=0))
 
     print(list(openem_df))
 
-    plt.plot(openem_df['Longitude'], openem_df['Latitude'])
-    for i in range(len(openem_df['ID'])):
-        if not i % 10:
-            plt.annotate(openem_df['ID'][i], xy=(openem_df['Longitude']
-                                                 [i], openem_df['Latitude'][i]), color='purple')
+    # plt.plot(openem_df['Longitude'], openem_df['Latitude'])
+    # for i in range(len(openem_df['ID'])):
+    #     if not i % 10:
+    #         plt.annotate(openem_df['ID'][i], xy=(openem_df['Longitude']
+    #                                              [i], openem_df['Latitude'][i]), color='purple')
     # plt.show()
     grads = []
 
@@ -33,7 +34,7 @@ def run(input_location, runs_location, output_location):
         plt.plot(transect_df['Longitude'], transect_df['Latitude'],
                  label='run: ' + str(j) + '\ny={0:.2f} x + {1:.2f}'.format(z[0], z[1]))
         grads.append(z[0])
-    plt.legend()
+    # plt.legend()
     # plt.show()
     grad = np.mean(grads)
 
@@ -65,14 +66,13 @@ def run(input_location, runs_location, output_location):
             cleck = 1
             print('Create')
             out_df = transect_df
-        plt.plot(transect_df['Longitude'], transect_df['Latitude'], label='run: ' + str(j))
+        # plt.plot(transect_df['Longitude'], transect_df['Latitude'], label='run: ' + str(j))
 
-    plt.legend()
+    # plt.legend()
     # plt.show()
 
-    plt.plot(out_df['Longitude'], out_df['Latitude'])
+    # plt.plot(out_df['Longitude'], out_df['Latitude'])
     # plt.show()
-    plt.plot(out_df['ID'], out_df['Hp'])
+    # plt.plot(out_df['ID'], out_df['Hp'])
     # plt.show()
     out_df.to_csv(output_location, index=False)
-    # out_df.to_csv('~/.local/share/QGIS/QGIS3/profiles/default/python/plugins/transect_aligner/lib/output.csv', index=False)
