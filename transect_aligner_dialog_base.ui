@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>391</width>
-    <height>288</height>
+    <width>406</width>
+    <height>303</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -42,7 +42,7 @@
     <string>Select Layer:</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="cb_inPointsVector">
    <property name="geometry">
     <rect>
      <x>130</x>
@@ -65,7 +65,7 @@
     <string>Transect File:</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="tb_inEnds">
    <property name="geometry">
     <rect>
      <x>360</x>
@@ -78,7 +78,7 @@
     <string>...</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="le_ends">
    <property name="geometry">
     <rect>
      <x>130</x>
@@ -101,7 +101,7 @@
     <string>Select Transect Ends</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton_2">
+  <widget class="QPushButton" name="tb_outFlie">
    <property name="geometry">
     <rect>
      <x>360</x>
@@ -114,7 +114,7 @@
     <string>...</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="le_output">
    <property name="geometry">
     <rect>
      <x>130</x>

@@ -33,6 +33,8 @@ from .transect_aligner_dialog import TransectAlignerDialog
 import os.path
 from .lib import align
 
+from qgis.core import QgsMapLayer
+
 class TransectAligner:
     """QGIS Plugin Implementation."""
 
@@ -178,6 +180,47 @@ class TransectAligner:
                 action)
             self.iface.removeToolBarIcon(action)
 
+    def loadPointsVector(self):
+        """Open later with points"""
+        self.dlg.cb_inPointsVector.clear()
+        layers = [layer for layer in QgsProject.instance().mapLayers().values()]
+        vector_layers = []
+        for layer in layers:
+            if layer.type() == QgsMapLayer.VectorLayer:
+                vector_layers.append(layer.name())
+        self.dlg.cb_inPointsVector.addItems(vector_layers)
+
+    def getTransectEnds(self):
+        inFile = str(QFileDialog.getOpenFileName(caption ="OpenCSV", filter="CSV (*.csv)")[0])
+        self.dlg.le_ends.setText(inFile)
+
+    def getinputLayer(self):
+        """Gets the raster layer specified in combo box"""
+        layer = None
+        layername = self.dlg.cb_inPointsVector.currentText()
+        for lyr in QgsProject.instance().mapLayers().values():
+            if lyr.name() == layername:
+                layer = lyr
+                break
+        input_file = layer.dataProvider().dataSourceUri().split('?')[0].split('//')[1]
+        return(input_file)
+
+    def saveResult(self):
+        """Get the file name where the clipped raster will be saved"""
+        outFile = str(QFileDialog.getSaveFileName(caption="Save output csv as",
+                                                filter="CSV (*.csv)")[0])
+        if outFile[-4:] == ".csv":
+            self.dlg.le_output.setText(outFile)
+        else:
+            self.dlg.le_output.setText(outFile + '.csv')
+
+    def precessData(self):
+        inFile = self.getinputLayer()
+        endsFile = self.dlg.le_ends.text()
+        outFile = self.dlg.le_output.text()
+        align.run(inFile, endsFile, outFile)
+
+
     def run(self):
         """Run method that performs all the real work"""
 
@@ -186,14 +229,16 @@ class TransectAligner:
         if self.first_start == True:
             self.first_start = False
             self.dlg = TransectAlignerDialog()
-            # self.dlg.pushButton.clicked.connect(self.select_output_file)
 
         # My code - kip .
-
+        self.loadPointsVector()
+        # self.getinputLayer()
+        self.dlg.tb_inEnds.clicked.connect(self.getTransectEnds)
+        self.dlg.tb_outFlie.clicked.connect(self.saveResult)
         # show the dialog
         self.dlg.show()
         # Run the dialog event loop
         result = self.dlg.exec_()
         # See if OK was pressed
         if result:
-            pass
+            self.precessData()
